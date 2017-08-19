@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "GloboCalc.ConsoleApp": {
+      "commandName": "Project",
+      "commandLineArgs": "\"23 * 2 + 45 - 24 / 5\""
+    }
+  }
+}
