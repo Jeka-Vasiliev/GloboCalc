@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using FluentAssertions;
+using GloboCalc.Core.Abstractions;
+using GloboCalc.Core.Operations.Factories;
+using GloboCalc.Core.Tokenization;
 using Xunit;
-using FluentAssertions;
 
 namespace GloboCalc.Core.Tests
 {
@@ -16,7 +16,19 @@ namespace GloboCalc.Core.Tests
         [InlineData("((2 + 3)/5)^3", 1d)]
         public void Calc_CalculateExpression(string expression, double expectedResult)
         {
-            var calc = new Calc();
+            var tokenizer = new Tokenizer();
+            var operationsFactory = new AllOperationsFactory(new IOperationFactory[]
+            {
+                new AdditionFactory(),
+                new SubtractionFactory(),
+                new MultiplicationFactory(),
+                new DivisionFactory(),
+                new ExponentiationFactory(),
+                new SinFunctionFactory(),
+            });
+            var tokensToCommands = new InfixToPostfixNotationConverter(operationsFactory);
+            var postfixCalc = new PostfixNotationCalculator();
+            var calc = new Calc(tokenizer, tokensToCommands, postfixCalc);
 
             var result = calc.CalculateExpression(expression);
 

@@ -9,13 +9,6 @@ namespace GloboCalc.Core
         private IInfixToPostfixNotationConverter _tokensToCommands;
         private IPostfixNotationCalculator _postfixCalc;
 
-        public Calc()
-        {
-            _tokenizer = new Tokenizer();
-            _tokensToCommands = new InfixToPostfixNotationConverter(new AllOperationsFactory());
-            _postfixCalc = new PostfixNotationCalculator();
-        }
-
         public Calc(ITokenizer tokenizer, IInfixToPostfixNotationConverter tokensToCommands, IPostfixNotationCalculator postfixCalc)
         {
             _tokenizer = tokenizer;

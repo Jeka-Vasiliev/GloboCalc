@@ -7,16 +7,32 @@ using FluentAssertions;
 using System.Linq;
 using GloboCalc.Core.Operations;
 using GloboCalc.Core.Operations.Abstractions;
+using GloboCalc.Core.Abstractions;
+using GloboCalc.Core.Operations.Factories;
 
 namespace GloboCalc.Core.Tests
 {
     public class InfixToPostfixNotationConverterTests
     {
+        private IInfixToPostfixNotationConverter GetConverter()
+        {
+            var operationsFactory = new AllOperationsFactory(new IOperationFactory[]
+            {
+                new AdditionFactory(),
+                new SubtractionFactory(),
+                new MultiplicationFactory(),
+                new DivisionFactory(),
+                new ExponentiationFactory(),
+                new SinFunctionFactory(),
+            });
+            return new InfixToPostfixNotationConverter(operationsFactory);
+        }
+
         [Fact]
         public void InfixToPostfixNotationConverter_Convert_Simple()
         {
             // 3 + 4
-            var converter = new InfixToPostfixNotationConverter(new AllOperationsFactory());
+            var converter = GetConverter();
             var tokens = new List<Token>
             {
                 new Token("3", TokenCategory.Number, 0),
@@ -37,7 +53,7 @@ namespace GloboCalc.Core.Tests
         public void InfixToPostfixNotationConverter_Convert_Brackets()
         {
             // 3 + 4 * (2 − 1)
-            var converter = new InfixToPostfixNotationConverter(new AllOperationsFactory());
+            var converter = GetConverter();
             var tokens = new List<Token>
             {
                 new Token("3", TokenCategory.Number, 0),
@@ -68,7 +84,7 @@ namespace GloboCalc.Core.Tests
         public void InfixToPostfixNotationConverter_Convert_RightAssociativity()
         {
             // 3 + 4 * 2 / ( 1 − 5 ) ^ 2 ^ 3
-            var converter = new InfixToPostfixNotationConverter(new AllOperationsFactory());
+            var converter = GetConverter();
             var tokens = new List<Token>
             {
                 new Token("3", TokenCategory.Number, 0),

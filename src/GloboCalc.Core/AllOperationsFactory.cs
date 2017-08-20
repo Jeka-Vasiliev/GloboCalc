@@ -11,20 +11,6 @@ namespace GloboCalc.Core
     {
         private Dictionary<string, IOperationFactory> _operationFactories;
 
-        public AllOperationsFactory()
-        {
-            var defaultFactories = new IOperationFactory[]
-            {
-                new AdditionFactory(),
-                new SubtractionFactory(),
-                new MultiplicationFactory(),
-                new DivisionFactory(),
-                new ExponentiationFactory(),
-                new SinFunctionFactory(),
-            };
-            _operationFactories = defaultFactories.ToDictionary(f => f.TokenValue);
-        }
-
         public AllOperationsFactory(IEnumerable<IOperationFactory> operationFactories)
         {
             _operationFactories = operationFactories.ToDictionary(f => f.TokenValue);
@@ -34,5 +20,16 @@ namespace GloboCalc.Core
         {
             return _operationFactories[token.Value].Create();
         }
+
+        public Associativity GetAssociativity(Token token)
+        {
+            return _operationFactories[token.Value].Associativity;
+        }
+
+        public int GetPresendence(Token token)
+        {
+            return _operationFactories[token.Value].Presendence;
+        }
+
     }
 }

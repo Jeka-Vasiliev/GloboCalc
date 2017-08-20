@@ -1,5 +1,7 @@
 ﻿using GloboCalc.Core;
 using GloboCalc.Core.Abstractions;
+using GloboCalc.Core.Operations.Factories;
+using GloboCalc.Core.Tokenization;
 using SimpleInjector;
 using System;
 using System.Linq;
@@ -12,20 +14,40 @@ namespace GloboCalc.ConsoleApp
         {
             using (var container = new Container())
             {
-                container.Register<ICalc, Calc>();
+                CompositionRoot(container);
 
                 var calc = container.GetInstance<ICalc>();
 
                 if (args.Any())
                 {
+                    // для списка атрибутов просто вычисляем каждый как выражение и выходим
                     var results = string.Join(' ', args.Select(calc.CalculateExpression));
                     Console.WriteLine(results);
                 }
                 else
                 {
+                    // при вызове без параметров входим в режим чтения консоли
                     ShowTips();
                 }
             }
+        }
+
+        static void CompositionRoot(Container container)
+        {
+            container.Register<ICalc, Calc>();
+            container.Register<ITokenizer, Tokenizer>();
+            container.Register<IInfixToPostfixNotationConverter, InfixToPostfixNotationConverter>();
+            container.Register<IPostfixNotationCalculator, PostfixNotationCalculator>();
+            container.Register<IAllOperationsFactory, AllOperationsFactory>();
+            container.RegisterCollection(new IOperationFactory[]
+            {
+                    new AdditionFactory(),
+                    new SubtractionFactory(),
+                    new DivisionFactory(),
+                    new MultiplicationFactory(),
+                    new ExponentiationFactory(),
+                    new SinFunctionFactory(),
+            });
         }
 
         static void ShowTips()

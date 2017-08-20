@@ -11,11 +11,12 @@ namespace GloboCalc.Core
     public class InfixToPostfixNotationConverter : IInfixToPostfixNotationConverter
     {
         private IAllOperationsFactory _operationFactories;
-        private readonly TokenComparer _tokenComparer = new TokenComparer();
+        private readonly TokenComparer _tokenComparer;
 
         public InfixToPostfixNotationConverter(IAllOperationsFactory operationFactories)
         {
             _operationFactories = operationFactories;
+            _tokenComparer = new TokenComparer(operationFactories);
         }
 
         /// <summary>
