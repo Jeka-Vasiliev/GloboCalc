@@ -57,5 +57,21 @@ namespace GloboCalc.Core.Tests
             result.Should().Be(5d);
         }
 
+        [Fact]
+        public void PostfixNotationCalculator_Execute_Sin()
+        {
+            // 2 sin
+            var evaluator = new PostfixNotationCalculator();
+            var tokens = new List<IOperation>
+            {
+                new Constant(2d),
+                new SinFunction(),
+           };
+
+            var result = evaluator.Execute(tokens);
+
+            result.Should().BeApproximately(0.9d, 0.1d);
+        }
+
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GloboCalc.Core
+namespace GloboCalc.Core.Abstractions
 {
     public interface IResultStack
     {

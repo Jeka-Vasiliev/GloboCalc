@@ -1,4 +1,6 @@
-﻿namespace GloboCalc.Core.Operations.Abstractions
+﻿using GloboCalc.Core.Abstractions;
+
+namespace GloboCalc.Core.Operations.Abstractions
 {
     /// <summary>
     /// Оператор или операнд очереди постфиксной нотации

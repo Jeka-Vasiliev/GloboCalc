@@ -1,4 +1,5 @@
-﻿using GloboCalc.Core.Operations.Abstractions;
+﻿using GloboCalc.Core.Abstractions;
+using GloboCalc.Core.Operations.Abstractions;
 
 namespace GloboCalc.Core.Operations
 {
