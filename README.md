@@ -23,11 +23,15 @@
 ## Сборка
 Программа написана в Visual Studio 2017. Но для компиляции она не нужна.
 
-Нужен [dotnet sdk 2.0](https://www.microsoft.com/net/download/core). Откройте в консоли папку **/GloboCalc/src/GloboCalc.ConsoleApp/**. Выполните команды
+Нужен [dotnet sdk 2.0](https://www.microsoft.com/net/download/core). Откройте в консоли папку с солюшеном. Выполните команды
 ```
 dotnet restore
 dotnet build
-dotnet run
+dotnet run --project ./src/GloboCalc.ConsoleApp
+```
+Для запуска юнит-тестов:
+```
+dotnet test ./test/GloboCalc.Core.Tests
 ```
 ## Использование
 Либо вызвать калькулятор с параметрами, например:

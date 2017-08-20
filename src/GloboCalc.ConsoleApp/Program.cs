@@ -69,7 +69,7 @@ namespace GloboCalc.ConsoleApp
             while (true)
             {
                 expression = Console.ReadLine();
-                if (expression == null) { return; }
+                if (string.IsNullOrEmpty(expression)) { return; }
                 try
                 {
                     var result = calc.CalculateExpression(expression);
@@ -86,7 +86,7 @@ namespace GloboCalc.ConsoleApp
         {
             Console.WriteLine("Write math expression");
             Console.WriteLine("Supported operators: ( ) + - * / ^ sin");
-            Console.WriteLine("For exit press ctrl+C");
+            Console.WriteLine("For exit press ctrl+C or input empty string");
             Console.WriteLine("Example: 23 * 2 + 45 - 24 / 5");
         }
 
