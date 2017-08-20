@@ -1,15 +1,22 @@
-﻿using GloboCalc.Core.Operations;
+﻿using GloboCalc.Core.Abstractions;
+using GloboCalc.Core.Operations;
 using GloboCalc.Core.Operations.Abstractions;
 using GloboCalc.Core.Tokenization;
+using System.Linq;
 using System;
 using System.Collections.Generic;
 
 namespace GloboCalc.Core
 {
-    public class InfixToPostfixNotationConverter
+    public class InfixToPostfixNotationConverter : IInfixToPostfixNotationConverter
     {
-        private OperationFactory _operationFactory = new OperationFactory();
+        private IAllOperationsFactory _operationFactories;
         private readonly TokenComparer _tokenComparer = new TokenComparer();
+
+        public InfixToPostfixNotationConverter(IAllOperationsFactory operationFactories)
+        {
+            _operationFactories = operationFactories;
+        }
 
         /// <summary>
         /// Реализация алгоритма Shunting-yard
@@ -36,7 +43,7 @@ namespace GloboCalc.Core
                     case TokenCategory.Operator:
                         while (operatorStack.Count > 0 && _tokenComparer.IsPrecedencer(operatorStack.Peek(), token))
                         {
-                            var operation = _operationFactory.CreateOperator(operatorStack.Pop());
+                            var operation = _operationFactories.CreateOperator(operatorStack.Pop());
                             outputQueue.Add(operation);
                         }
                         operatorStack.Push(token);
@@ -56,7 +63,7 @@ namespace GloboCalc.Core
                             {
                                 break;
                             }
-                            var operation = _operationFactory.CreateOperator(tokenFromStack);
+                            var operation = _operationFactories.CreateOperator(tokenFromStack);
                             outputQueue.Add(operation);
                         }
                         break;
@@ -71,7 +78,7 @@ namespace GloboCalc.Core
                 {
                     throw new ParseException("Mismatched parentheses", tokenFromStack.Position);
                 }
-                var operation = _operationFactory.CreateOperator(tokenFromStack);
+                var operation = _operationFactories.CreateOperator(tokenFromStack);
                 outputQueue.Add(operation);
             }
 

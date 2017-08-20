@@ -2,18 +2,13 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using GloboCalc.Core.Abstractions;
 
 namespace GloboCalc.Core.Tokenization
 {
-    public class Tokenizer
+    public class Tokenizer : ITokenizer
     {
         const char decimalSeparator = '.';
-        string validOperators = "+-*/%^";
-
-        public Tokenizer()
-        {
-
-        }
 
         public List<Token> Parse(string expression)
         {
@@ -56,11 +51,6 @@ namespace GloboCalc.Core.Tokenization
                     unaryMinus = true;
                     unaryMinusPosition = i;
                 }
-                else if (IsOperator(chars[i]))
-                {
-                    if (unaryMinus) { throw new ParseException(i); }
-                    tokens.Add(new Token(chars[i].ToString(), TokenCategory.Operator, i));
-                }
                 else if (IsLeftBracket(chars[i]))
                 {
                     if (unaryMinus) { throw new ParseException(i); }
@@ -71,6 +61,12 @@ namespace GloboCalc.Core.Tokenization
                     if (unaryMinus) { throw new ParseException(i); }
                     tokens.Add(new Token(chars[i].ToString(), TokenCategory.RightBracket, i));
                 }
+                else
+                {
+                    if (unaryMinus) { throw new ParseException(i); }
+                    tokens.Add(new Token(chars[i].ToString(), TokenCategory.Operator, i));
+                }
+
             }
 
             return tokens;
@@ -85,12 +81,6 @@ namespace GloboCalc.Core.Tokenization
         {
             return character == ')';
         }
-
-        private bool IsOperator(char character)
-        {
-            return validOperators.Any(op => op == character);
-        }
-
 
         private bool IsUnaryMinus(char character, List<Token> tokens)
         {
@@ -107,7 +97,7 @@ namespace GloboCalc.Core.Tokenization
 
         private bool IsEmptySpace(char character)
         {
-            return (character == ' ' && character == '\t');
+            return (character == ' ' || character == '\t');
         }
 
         private bool IsNumberPart(char character)

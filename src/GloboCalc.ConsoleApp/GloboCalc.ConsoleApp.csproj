@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="SimpleInjector" Version="4.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\GloboCalc.Core\GloboCalc.Core.csproj" />
   </ItemGroup>
 

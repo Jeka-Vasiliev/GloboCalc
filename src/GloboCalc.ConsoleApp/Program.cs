@@ -1,4 +1,6 @@
 ﻿using GloboCalc.Core;
+using GloboCalc.Core.Abstractions;
+using SimpleInjector;
 using System;
 using System.Linq;
 
@@ -8,15 +10,21 @@ namespace GloboCalc.ConsoleApp
     {
         static void Main(string[] args)
         {
-            if (args.Any())
+            using (var container = new Container())
             {
-                var calc = new Calc();
-                var results = string.Join(' ', args.Select(calc.CalculateExpression));
-                Console.WriteLine(results);
-            }
-            else
-            {
-                ShowTips();
+                container.Register<ICalc, Calc>();
+
+                var calc = container.GetInstance<ICalc>();
+
+                if (args.Any())
+                {
+                    var results = string.Join(' ', args.Select(calc.CalculateExpression));
+                    Console.WriteLine(results);
+                }
+                else
+                {
+                    ShowTips();
+                }
             }
         }
 

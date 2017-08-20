@@ -16,7 +16,7 @@ namespace GloboCalc.Core.Tests
         public void InfixToPostfixNotationConverter_Convert_Simple()
         {
             // 3 + 4
-            var builder = new InfixToPostfixNotationConverter();
+            var converter = new InfixToPostfixNotationConverter(new AllOperationsFactory());
             var tokens = new List<Token>
             {
                 new Token("3", TokenCategory.Number, 0),
@@ -24,7 +24,7 @@ namespace GloboCalc.Core.Tests
                 new Token("4", TokenCategory.Number, 2),
             };
 
-            var result = builder.Convert(tokens);
+            var result = converter.Convert(tokens);
 
             // 3 4 +
             result.Should().HaveCount(3);
@@ -37,7 +37,7 @@ namespace GloboCalc.Core.Tests
         public void InfixToPostfixNotationConverter_Convert_Brackets()
         {
             // 3 + 4 * (2 − 1)
-            var builder = new InfixToPostfixNotationConverter();
+            var converter = new InfixToPostfixNotationConverter(new AllOperationsFactory());
             var tokens = new List<Token>
             {
                 new Token("3", TokenCategory.Number, 0),
@@ -51,7 +51,7 @@ namespace GloboCalc.Core.Tests
                 new Token(")", TokenCategory.RightBracket, 8),
             };
 
-            var result = builder.Convert(tokens);
+            var result = converter.Convert(tokens);
 
             // 3 4 2 1 − * +
             result.Should().HaveCount(7);
@@ -68,7 +68,7 @@ namespace GloboCalc.Core.Tests
         public void InfixToPostfixNotationConverter_Convert_RightAssociativity()
         {
             // 3 + 4 * 2 / ( 1 − 5 ) ^ 2 ^ 3
-            var builder = new InfixToPostfixNotationConverter();
+            var converter = new InfixToPostfixNotationConverter(new AllOperationsFactory());
             var tokens = new List<Token>
             {
                 new Token("3", TokenCategory.Number, 0),
@@ -88,7 +88,7 @@ namespace GloboCalc.Core.Tests
                 new Token("3", TokenCategory.Number, 14),
             };
 
-            var result = builder.Convert(tokens);
+            var result = converter.Convert(tokens);
 
             // 3 4 2 * 1 5 − 2 3 ^ ^ / +
             result.Should().HaveCount(13);

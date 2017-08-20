@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using GloboCalc.Core.Operations.Abstractions;
+using GloboCalc.Core.Abstractions;
 
 namespace GloboCalc.Core
 {
-    public class PostfixNotationCalculator
+    public class PostfixNotationCalculator : IPostfixNotationCalculator
     {
         private readonly ResultStack _resultStack = new ResultStack();
 

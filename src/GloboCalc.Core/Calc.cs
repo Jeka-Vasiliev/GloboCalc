@@ -1,21 +1,26 @@
-﻿using GloboCalc.Core.Tokenization;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GloboCalc.Core.Abstractions;
+using GloboCalc.Core.Tokenization;
 
 namespace GloboCalc.Core
 {
-    public class Calc
+    public class Calc : ICalc
     {
-        private Tokenizer _tokenizer;
-        private InfixToPostfixNotationConverter _tokensToCommands;
-        private PostfixNotationCalculator _postfixCalc;
+        private ITokenizer _tokenizer;
+        private IInfixToPostfixNotationConverter _tokensToCommands;
+        private IPostfixNotationCalculator _postfixCalc;
 
         public Calc()
         {
             _tokenizer = new Tokenizer();
-            _tokensToCommands = new InfixToPostfixNotationConverter();
+            _tokensToCommands = new InfixToPostfixNotationConverter(new AllOperationsFactory());
             _postfixCalc = new PostfixNotationCalculator();
+        }
+
+        public Calc(ITokenizer tokenizer, IInfixToPostfixNotationConverter tokensToCommands, IPostfixNotationCalculator postfixCalc)
+        {
+            _tokenizer = tokenizer;
+            _tokensToCommands = tokensToCommands;
+            _postfixCalc = postfixCalc;
         }
 
         public double CalculateExpression(string expression)
