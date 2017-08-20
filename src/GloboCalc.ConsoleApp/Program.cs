@@ -27,7 +27,7 @@ namespace GloboCalc.ConsoleApp
                 else
                 {
                     // при вызове без параметров входим в режим чтения консоли
-                    ShowTips();
+                    CommandLoop(calc);
                 }
             }
         }
@@ -41,19 +41,43 @@ namespace GloboCalc.ConsoleApp
             container.Register<IAllOperationsFactory, AllOperationsFactory>();
             container.RegisterCollection(new IOperationFactory[]
             {
-                    new AdditionFactory(),
-                    new SubtractionFactory(),
-                    new DivisionFactory(),
-                    new MultiplicationFactory(),
-                    new ExponentiationFactory(),
-                    new SinFunctionFactory(),
+                new AdditionFactory(),
+                new SubtractionFactory(),
+                new DivisionFactory(),
+                new MultiplicationFactory(),
+                new ExponentiationFactory(),
+                new SinFunctionFactory(),
             });
+        }
+
+        static void CommandLoop(ICalc calc)
+        {
+            ShowTips();
+            string expression = null;
+            while (true)
+            {
+                expression = Console.ReadLine();
+                if (expression == null) { return; }
+                try
+                {
+                    var result = calc.CalculateExpression(expression);
+                    Console.WriteLine(result);
+                }
+                catch (ParseException ex)
+                {
+                    Console.WriteLine("There is an error: {0}", ex.Message);
+                    Console.WriteLine(expression);
+                    Console.Write(new string(' ', ex.Position));
+                    Console.WriteLine('^');
+                }
+            }
         }
 
         static void ShowTips()
         {
-            Console.WriteLine("Usage: GloboCalc.exe \"<math expression>\"");
-            Console.WriteLine("Example: GloboCalc.exe \"23 * 2 + 45 - 24 / 5\"");
+            Console.WriteLine("Write math expression");
+            Console.WriteLine("For exit press ctrl+C");
+            Console.WriteLine("Example: 23 * 2 + 45 - 24 / 5");
         }
     }
 }

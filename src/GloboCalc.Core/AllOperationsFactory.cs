@@ -18,18 +18,26 @@ namespace GloboCalc.Core
 
         public IOperation CreateOperator(Token token)
         {
+            CheckFactoryExists(token);
             return _operationFactories[token.Value].Create();
         }
 
         public Associativity GetAssociativity(Token token)
         {
+            CheckFactoryExists(token);
             return _operationFactories[token.Value].Associativity;
         }
 
         public int GetPresendence(Token token)
         {
+            CheckFactoryExists(token);
             return _operationFactories[token.Value].Presendence;
         }
 
+        private void CheckFactoryExists(Token token)
+        {
+            var hasKey = _operationFactories.ContainsKey(token.Value);
+            if (!hasKey) { throw new ParseException("Unknown operator", token.Position); }
+        }
     }
 }
