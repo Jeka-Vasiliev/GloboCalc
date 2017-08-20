@@ -102,7 +102,7 @@ namespace GloboCalc.Core.Tokenization
 
         private bool IsNumberPart(char character)
         {
-            return (character >= '1' && character <= '9') || character == decimalSeparator;
+            return (character >= '0' && character <= '9') || character == decimalSeparator;
         }
 
         private bool IsFunctionStarting(char character)
@@ -114,7 +114,7 @@ namespace GloboCalc.Core.Tokenization
         {
             return (character >= 'a' && character <= 'z') ||
                 (character >= 'A' && character <= 'Z') ||
-                (character >= '1' && character <= '9');
+                (character >= '0' && character <= '9');
         }
 
         private string ReadLexeme(char[] chars, ref int i, Func<char, bool> isPartOfLexeme, string prefix = "")

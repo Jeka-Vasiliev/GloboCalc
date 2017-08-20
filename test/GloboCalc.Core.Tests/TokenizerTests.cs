@@ -108,5 +108,21 @@ namespace GloboCalc.Core.Tests
             });
         }
 
+        [Fact]
+        public void Tokenizer_Parse_FuncWithDigits()
+        {
+            var tokenazer = new Tokenizer();
+
+            var tokens = tokenazer.Parse("log10(100)");
+
+            tokens.ShouldAllBeEquivalentTo(new List<Token>
+            {
+                new Token("log10", TokenCategory.Operator, 0),
+                new Token("(", TokenCategory.LeftBracket, 5),
+                new Token("100", TokenCategory.Number, 6),
+                new Token(")", TokenCategory.RightBracket, 9),
+            });
+
+        }
     }
 }
