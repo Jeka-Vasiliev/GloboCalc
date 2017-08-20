@@ -1,6 +1,5 @@
 ﻿using GloboCalc.Core.Abstractions;
 using GloboCalc.Core.Operations.Abstractions;
-using GloboCalc.Core.Operations.Factories;
 using GloboCalc.Core.Tokenization;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +18,7 @@ namespace GloboCalc.Core
         public IOperation CreateOperator(Token token)
         {
             CheckFactoryExists(token);
-            return _operationFactories[token.Value].Create();
+            return _operationFactories[token.Value].Create(token.Position);
         }
 
         public Associativity GetAssociativity(Token token)

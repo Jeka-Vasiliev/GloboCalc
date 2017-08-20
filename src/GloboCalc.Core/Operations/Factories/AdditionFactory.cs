@@ -11,9 +11,9 @@ namespace GloboCalc.Core.Operations.Factories
 
         public int Presendence => 2;
 
-        public IOperation Create()
+        public IOperation Create(int position)
         {
-            return new Addition();
+            return new Addition(position);
         }
     }
 }

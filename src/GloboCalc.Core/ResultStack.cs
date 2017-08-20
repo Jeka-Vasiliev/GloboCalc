@@ -1,7 +1,5 @@
 ﻿using GloboCalc.Core.Abstractions;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace GloboCalc.Core
 {
@@ -29,11 +27,12 @@ namespace GloboCalc.Core
         {
             if (_stack.Count == 0)
             {
-                throw new Exception("Result stack is empty");
+                throw new ParseException("Result is empty", 0);
             }
             if (_stack.Count > 1)
             {
-                throw new Exception("Can't evaluate: incorrect input");
+                _stack.Clear();
+                throw new ParseException("Can't evaluate: incorrect input", 0);
             }
 
             return _stack.Pop();
