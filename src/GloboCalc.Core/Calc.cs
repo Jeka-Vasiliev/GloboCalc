@@ -1,13 +1,12 @@
 ﻿using GloboCalc.Core.Abstractions;
-using GloboCalc.Core.Tokenization;
 
 namespace GloboCalc.Core
 {
     public class Calc : ICalc
     {
-        private ITokenizer _tokenizer;
-        private IInfixToPostfixNotationConverter _tokensToCommands;
-        private IPostfixNotationCalculator _postfixCalc;
+        private readonly ITokenizer _tokenizer;
+        private readonly IInfixToPostfixNotationConverter _tokensToCommands;
+        private readonly IPostfixNotationCalculator _postfixCalc;
 
         public Calc(ITokenizer tokenizer, IInfixToPostfixNotationConverter tokensToCommands, IPostfixNotationCalculator postfixCalc)
         {

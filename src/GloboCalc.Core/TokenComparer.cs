@@ -5,7 +5,7 @@ namespace GloboCalc.Core
 {
     public class TokenComparer
     {
-        IOperationPropertiesExtractor _extractor;
+        private readonly IOperationPropertiesExtractor _extractor;
 
         public TokenComparer(IOperationPropertiesExtractor extractor)
         {

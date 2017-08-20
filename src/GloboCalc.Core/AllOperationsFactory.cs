@@ -8,7 +8,7 @@ namespace GloboCalc.Core
 {
     public class AllOperationsFactory : IAllOperationsFactory
     {
-        private Dictionary<string, IOperationFactory> _operationFactories;
+        private readonly Dictionary<string, IOperationFactory> _operationFactories;
 
         public AllOperationsFactory(IEnumerable<IOperationFactory> operationFactories)
         {

@@ -2,15 +2,13 @@
 using GloboCalc.Core.Operations;
 using GloboCalc.Core.Operations.Abstractions;
 using GloboCalc.Core.Tokenization;
-using System.Linq;
-using System;
 using System.Collections.Generic;
 
 namespace GloboCalc.Core
 {
     public class InfixToPostfixNotationConverter : IInfixToPostfixNotationConverter
     {
-        private IAllOperationsFactory _operationFactories;
+        private readonly IAllOperationsFactory _operationFactories;
         private readonly TokenComparer _tokenComparer;
 
         public InfixToPostfixNotationConverter(IAllOperationsFactory operationFactories)
