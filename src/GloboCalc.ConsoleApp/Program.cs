@@ -1,4 +1,5 @@
-﻿using GloboCalc.Core;
+﻿using GloboCalc.ConsoleApp.CustomOperation;
+using GloboCalc.Core;
 using GloboCalc.Core.Abstractions;
 using GloboCalc.Core.Operations.Factories;
 using GloboCalc.Core.Tokenization;
@@ -41,12 +42,13 @@ namespace GloboCalc.ConsoleApp
             container.Register<IAllOperationsFactory, AllOperationsFactory>();
             container.RegisterCollection(new IOperationFactory[]
             {
-                    new AdditionFactory(),
-                    new SubtractionFactory(),
-                    new DivisionFactory(),
-                    new MultiplicationFactory(),
-                    new ExponentiationFactory(),
-                    new SinFunctionFactory(),
+                new AdditionFactory(),
+                new SubtractionFactory(),
+                new DivisionFactory(),
+                new MultiplicationFactory(),
+                new ExponentiationFactory(),
+                new SinFunctionFactory(),
+                new Log10OperationFactory(),
             });
         }
 
