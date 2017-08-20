@@ -10,9 +10,16 @@ namespace GloboCalc.Core.Operations
     {
         public double Value { get; }
 
+        public int Position { get; }
+
         public Constant(double value)
         {
             Value = value;
+        }
+        public Constant(double value, int position)
+        {
+            Value = value;
+            Position = position;
         }
 
         public void Execute(IResultStack resultStack)

@@ -7,13 +7,28 @@ namespace GloboCalc.Core.Operations.Abstractions
 {
     public abstract class UnaryOperation : IOperation
     {
+        public int Position { get; }
+
+        public UnaryOperation() { }
+        public UnaryOperation(int position)
+        {
+            Position = position;
+        }
+
         protected abstract double Apply(double value);
 
         public void Execute(IResultStack resultStack)
         {
-            var value = resultStack.Pop();
-            var result = Apply(value);
-            resultStack.Push(result);
+            try
+            {
+                var value = resultStack.Pop();
+                var result = Apply(value);
+                resultStack.Push(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new ParseException("Invalid operatior", Position, ex);
+            }
         }
     }
 }

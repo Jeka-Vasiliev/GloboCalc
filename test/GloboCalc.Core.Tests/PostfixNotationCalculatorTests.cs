@@ -73,5 +73,36 @@ namespace GloboCalc.Core.Tests
             result.Should().BeApproximately(0.9d, 0.1d);
         }
 
+        [Fact]
+        public void PostfixNotationCalculator_Execute_MimatchedOperators()
+        {
+            // +
+            var evaluator = new PostfixNotationCalculator();
+            var operations = new List<IOperation>
+            {
+                new Addition(1),
+            };
+
+            evaluator.Invoking(c => c.Execute(operations))
+                .ShouldThrowExactly<ParseException>()
+                .Where(e => e.Position == 1);
+        }
+
+        [Fact]
+        public void PostfixNotationCalculator_Execute_MimatchedOperands()
+        {
+            // 1 2
+            var evaluator = new PostfixNotationCalculator();
+            var operations = new List<IOperation>
+            {
+                new Constant(1d, 1),
+                new Constant(2d, 3),
+            };
+
+            evaluator.Invoking(c => c.Execute(operations))
+                .ShouldThrowExactly<ParseException>()
+                .Where(e => e.Position == 0);
+        }
+
     }
 }

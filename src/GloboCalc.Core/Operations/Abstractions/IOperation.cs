@@ -11,5 +11,7 @@ namespace GloboCalc.Core.Operations.Abstractions
         /// Обработка текущего токена
         /// </summary>
         void Execute(IResultStack resultStack);
+
+        int Position { get; }
     }
 }

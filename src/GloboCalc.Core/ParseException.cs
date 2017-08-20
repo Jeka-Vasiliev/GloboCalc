@@ -17,5 +17,10 @@ namespace GloboCalc.Core
         {
             Position = position;
         }
+
+        public ParseException(string message, int position, Exception ex) : base(message, ex)
+        {
+            Position = position;
+        }
     }
 }

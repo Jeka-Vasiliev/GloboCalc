@@ -15,9 +15,9 @@ namespace GloboCalc.ConsoleApp.CustomOperation
 
         public int Presendence => 5;
 
-        public IOperation Create()
+        public IOperation Create(int position)
         {
-            return new Log10Operation();
+            return new Log10Operation(position);
         }
     }
 }

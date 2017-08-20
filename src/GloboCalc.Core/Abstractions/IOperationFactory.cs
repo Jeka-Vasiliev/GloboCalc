@@ -25,7 +25,8 @@ namespace GloboCalc.Core.Abstractions
         /// <summary>
         /// Создает операцию
         /// </summary>
+        /// <param name="position">Позиция символа в выражении</param>
         /// <returns>Операция</returns>
-        IOperation Create();
+        IOperation Create(int position);
     }
 }

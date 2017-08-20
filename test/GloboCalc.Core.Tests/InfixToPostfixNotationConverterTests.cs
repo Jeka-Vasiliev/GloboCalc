@@ -122,5 +122,22 @@ namespace GloboCalc.Core.Tests
             result[11].Should().BeOfType<Division>();
             result[12].Should().BeOfType<Addition>();
         }
+
+
+        [Fact]
+        public void InfixToPostfixNotationConverter_Convert_MismatchedOperator()
+        {
+            var converter = GetConverter();
+            var tokens = new List<Token>
+            {
+                new Token("3", TokenCategory.Number, 0),
+                new Token("+", TokenCategory.Operator, 1),
+                new Token("randomFunc", TokenCategory.Operator, 2),
+            };
+
+            converter.Invoking(c => c.Convert(tokens))
+                .ShouldThrowExactly<ParseException>()
+                .Where(e => e.Position == 2);
+        }
     }
 }

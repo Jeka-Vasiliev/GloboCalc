@@ -1,8 +1,12 @@
 {
   "profiles": {
-    "GloboCalc.ConsoleApp": {
+    "Run With Example Params": {
       "commandName": "Project",
       "commandLineArgs": "\"23 * 2 + 45 - 24 / 5\" \"log10(100)\""
+    },
+    "Run Console Loop": {
+      "commandName": "Project",
+      "commandLineArgs": ""
     }
   }
 }
